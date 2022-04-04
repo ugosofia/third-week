@@ -1,30 +1,30 @@
-package com.corso.java.hibernate;
+package com.corso.java.hibernate.studente;
 
 
+import com.corso.java.hibernate.Event;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.Date;
 import java.util.List;
 
-public class EventTest {
+public class DepartmentTest {
     private SessionFactory sessionFactory;
 
     public static void main(String arg[]) throws Exception {
-        EventTest test = new EventTest();
+        DepartmentTest test = new DepartmentTest();
         test.setUp();
         test.testBasicUsage();
         test.shutDown();
     }
 
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         sessionFactory = new Configuration()
                 .configure() // configura la SessionFactory utilizzando l' hibernate.cfg.xml
                 .buildSessionFactory();
     }
 
-    public void shutDown() throws Exception {
+    protected void shutDown() throws Exception {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
@@ -33,16 +33,16 @@ public class EventTest {
     public void testBasicUsage() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.save(new Event());
-        session.save(new Event());
+        session.save(new Student(1023, "ugo", "Sofia", 1));
+        session.save(new Department(1, "informatica"));
         session.getTransaction().commit();
         session.close();
 
         session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery("from com.corso.java.hibernate.Event").list();
-        for (Event event : (List<Event>) result) {
-            System.out.println("Event (" + event.getDate() + ") : " + event.getTitle() + "  " + event.getDescription());
+        List result = session.createQuery("from com.corso.java.hibernate.studente.Student").list();
+        for (Student student : (List<Student>) result) {
+            System.out.println("Student (" + student.getId() + ") : " + student.getName() + "  " + student.getLastname() + " " + student.getIdDepartment() );
         }
         session.getTransaction().commit();
         session.close();

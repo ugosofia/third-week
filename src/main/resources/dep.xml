@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.corso.java.hibernate.studente">
+
+    <class name="Student" table="student">
+        <id name="id" column="ID">
+            <generator class="sequence"/>
+        </id>
+        <property name="name" column="NAME"/>
+        <many-to-one name="idDepartment" column="ID_DEPARTMENT" unique="false" cascade="all"/>
+    </class>
+    <class name="Department" table="department">
+        <id name="id" column="ID">
+            <generator class="sequence"/>
+        </id>
+        <discriminator column="DEPARTMENT_TYPE" type="string"/>
+        <property name="name" column="name_DEP"/>
+
+        <many-to-one name="studenti" column="studenti" unique="true" cascade="all"/>
+
+    </class>
+</hibernate-mapping>
