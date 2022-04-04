@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.corso.java.hibernate.studente.Department" table="department" >
+        <id name="id" type="java.lang.Integer">
+            <column name="id_department" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name_department" length="10" not-null="true" unique="true" />
+        </property>
+
+        <set name="idDepartment" table="student"
+             inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="studenti" not-null="true" />
+            </key>
+            <one-to-many class="com.corso.java.hibernate.studente.Student" />
+        </set>
+    </class>
+</hibernate-mapping>
